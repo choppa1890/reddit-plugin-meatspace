@@ -53,7 +53,10 @@ def obscure(user):
     if not all_karmas:
         return _("lurker")
     srnames = [x[0] for x in all_karmas]
-    srs = Subreddit._by_name(srnames).values()
+    srs = [sr for sr in Subreddit._by_name(srnames).values()
+           if sr.type in ("public", "restricted")]
+    if not srs:
+        return _("something secret")
     srs.sort(key=lambda sr: sr._downs)
     most_obscure = srs[0]
     return "/r/" + most_obscure.name
