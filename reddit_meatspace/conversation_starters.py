@@ -1,4 +1,4 @@
-from pylons.i18n import _
+from pylons.i18n import _, N_
 
 from r2.models import Subreddit
 
@@ -9,17 +9,17 @@ TOPICS = {}
 def conversation_starter(title):
     def conversation_starter_decorator(fn):
         TOPICS[fn.__name__] = fn
-        fn.title = title
+        fn.title = lambda: _(title)
         return fn
     return conversation_starter_decorator
 
 
-@conversation_starter(_("april fools' team"))
+@conversation_starter(N_("april fools' team"))
 def f2p_team(user):
     return "orangered" if user._id % 2 == 0 else "periwinkle"
 
 
-@conversation_starter(_("most active in"))
+@conversation_starter(N_("most active in"))
 def top_sr(user):
     all_karmas = user.all_karmas()
     if not all_karmas:
@@ -28,26 +28,28 @@ def top_sr(user):
     return "/r/" + top_sr[0]
 
 
-@conversation_starter(_("snoo-o-logical sign"))
+_ZODIAC_SIGNS = [
+    N_("capricorn"),
+    N_("aquarius"),
+    N_("pisces"),
+    N_("aries"),
+    N_("taurus"),
+    N_("gemini"),
+    N_("cancer"),
+    N_("leo"),
+    N_("virgo"),
+    N_("libra"),
+    N_("scorpio"),
+    N_("sagittarius"),
+]
+
+
+@conversation_starter(N_("snoo-o-logical sign"))
 def zodiac(user):
-    zodiac_signs = [
-        _("capricorn"),
-        _("aquarius"),
-        _("pisces"),
-        _("aries"),
-        _("taurus"),
-        _("gemini"),
-        _("cancer"),
-        _("leo"),
-        _("virgo"),
-        _("libra"),
-        _("scorpio"),
-        _("sagittarius"),
-    ]
-    return zodiac_signs[user._date.month % 12]
+    return _(_ZODIAC_SIGNS[user._date.month % 12])
 
 
-@conversation_starter(_("most obscure"))
+@conversation_starter(N_("most obscure"))
 def obscure(user):
     all_karmas = user.all_karmas()
     if not all_karmas:

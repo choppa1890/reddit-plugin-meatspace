@@ -63,7 +63,7 @@ class ConversationStarterSelector(Templated):
         for topic, generator in TOPICS.iteritems():
             self.topics.append({
                 "code": topic,
-                "title": generator.title,
+                "title": generator.title(),
                 "content": generator(user),
             })
 
@@ -90,7 +90,7 @@ class QrCodeBadge(Templated):
             topic = random.choice(TOPICS.keys())
         starter = TOPICS[topic]
         self.starter = Storage(
-            title=starter.title,
+            title=starter.title(),
             content=starter(user),
         )
 
