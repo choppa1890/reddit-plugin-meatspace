@@ -82,4 +82,4 @@ class MeetupConnectionsByAccount(tdb_cassandra.View):
     def _connections(cls, meetup, user):
         rowkey = cls._rowkey(meetup, user)
         connections = cls.get_time_sorted_columns(rowkey).keys()
-        return Account._byID36(connections, return_dict=False)
+        return Account._byID36(connections, return_dict=False, data=True)
