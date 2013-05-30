@@ -47,12 +47,12 @@ class QrCodeController(RedditController):
     @validate(
         VUser(),
         meetup=validators.VMeetup("codename"),
+        topic=validators.VConversationStarter("topic"),
     )
-    def GET_badge(self, meetup):
+    def GET_badge(self, meetup, topic):
         if meetup.state not in BADGE_STATES:
             return redirect_to("/meetup/%s" % str(meetup._id))
 
-        topic = request.params.get("topic", None)
         content = pages.QrCodeBadge(meetup, c.user, topic)
         return pages.MeatspaceBadgePage(content=content).render()
 
