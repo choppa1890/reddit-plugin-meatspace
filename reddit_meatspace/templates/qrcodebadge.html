@@ -3,7 +3,7 @@
   from r2.lib.template_helpers import static
 %>
 
-${unsafe(safemarkdown(_("Print this badge out, fill in the blanks, and take it with you to the meetup. Please don't share your secret code online. If you're allergic to paper, you can [have your phone scanned instead]({url}).").format(url="/meetup/" + thing.meetup._id + "/mobile_badge"), wrap=True))}
+${unsafe(safemarkdown(_("Print this badge out, fill in the blanks, and take it with you to the meetup. Please don't share your secret code online. You can also [have your phone scanned instead]({url}).").format(url="/meetup/" + thing.meetup._id + "/mobile_badge"), wrap=True))}
 
 <div id="badge">
   <table>

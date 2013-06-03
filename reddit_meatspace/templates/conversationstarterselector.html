@@ -3,7 +3,7 @@
 %>
 
 ${unsafe(safemarkdown(_("Choose a fact about your account to put on your badge."), wrap=True))}
-${unsafe(safemarkdown(_("If you're allergic to paper, you can [have your phone scanned instead]({url}).").format(url="/meetup/" + thing.meetup._id + "/mobile_badge"), wrap=True))}
+${unsafe(safemarkdown(_("You can also [have your phone scanned instead]({url}).").format(url="/meetup/" + thing.meetup._id + "/mobile_badge"), wrap=True))}
 
 <table class="conversation-starters">
   % for topic in thing.topics:
