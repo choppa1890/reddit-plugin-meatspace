@@ -7,7 +7,8 @@ from r2.controllers import add_controller
 from r2.controllers.reddit_base import RedditController
 from r2.lib.validator import validate, VUser, VInt, VExistingUname, validatedForm
 from r2.lib.errors import errors
-from reddit_meatspace import pages, validators, models
+
+from reddit_meatspace import pages, validators, models, utils
 
 
 BADGE_STATES = {"prep", "active"}
@@ -108,7 +109,7 @@ class QrCodeController(RedditController):
             form.set_error(errors.MEETUP_NOT_WITH_SELF, "username")
             return
 
-        expected_code = pages.QrCodeBadge.make_code(meetup, other)
+        expected_code = utils.make_secret_code(meetup, other)
         if code != expected_code:
             g.log.warning("invalid code, got %r expected %r", code, expected_code)
             c.errors.add(errors.MEETUP_INVALID_CODE, field="code")

@@ -1,4 +1,3 @@
-import hashlib
 import random
 import urllib
 
@@ -10,6 +9,7 @@ from r2.lib.pages import Templated, BoringPage
 from r2.lib.template_helpers import add_sr, format_number
 from r2.lib.utils import Storage
 
+from reddit_meatspace import utils
 from reddit_meatspace.conversation_starters import TOPICS
 
 
@@ -79,7 +79,7 @@ class QrCodeBadge(Templated):
         self.comment_karma = format_number(max(user.karma("comment"), 0))
         self.registration_date = format_date(user._date, "medium", c.locale)
 
-        self.code = "%02d" % self.make_code(meetup, user)
+        self.code = "%02d" % utils.make_secret_code(meetup, user)
 
         params = urllib.urlencode({"user": user.name, "code": self.code})
         path = "/meetup/%s/connect?%s" % (meetup._id, params)
@@ -95,13 +95,6 @@ class QrCodeBadge(Templated):
         )
 
         Templated.__init__(self)
-
-    @staticmethod
-    def make_code(meetup, user):
-        hash = hashlib.md5(g.SECRET)
-        hash.update(str(meetup._id))
-        hash.update(str(user._id))
-        return int(hash.hexdigest()[-8:], 16) % 100
 
 
 class MobileQrCodeBadge(QrCodeBadge):
