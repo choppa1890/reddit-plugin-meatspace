@@ -31,7 +31,7 @@ class QrCodeController(RedditController):
 
         return pages.MeatspacePage(
             content=content,
-            extra_page_classes=["meatspace-page", "meatspace-portal"]
+            page_classes=["meatspace-portal"]
         ).render()
 
     @validate(
