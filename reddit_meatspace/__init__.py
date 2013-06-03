@@ -1,4 +1,4 @@
-from pylons.i18n import _
+from pylons.i18n import N_
 
 from r2.lib.plugin import Plugin
 from r2.config.routing import not_in_sr
@@ -15,6 +15,11 @@ class Meatspace(Plugin):
         ),
     }
 
+    errors = {
+        "MEETUP_NOT_WITH_SELF": N_("you can't connect with yourself"),
+        "MEETUP_INVALID_CODE": N_("that is not the correct code"),
+    }
+
     def add_routes(self, mc):
         mc("/meetup/:codename/:action", controller="qrcode", action="portal",
            conditions={"function": not_in_sr})
@@ -29,9 +34,3 @@ class Meatspace(Plugin):
 
     def load_controllers(self):
         from reddit_meatspace.qrcode import QrCodeController
-
-    def add_error_codes(self, errors):
-        errors.add_error_codes({
-            "MEETUP_NOT_WITH_SELF": _("you can't connect with yourself"),
-            "MEETUP_INVALID_CODE": _("that is not the correct code"),
-        })
