@@ -25,7 +25,6 @@
     </div>
 
     <% from r2.lib import js %>
-    <script>r = {};</script>
-    ${unsafe(js.use('jquery', 'meatspace-qrcode'))}
+    ${unsafe(js.use('jquery', 'reddit-init', 'meatspace-qrcode'))}
   </body>
 </html>
